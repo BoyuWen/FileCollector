@@ -7,8 +7,11 @@ import java.io.File;
  */
 public class Test {
     public static void main(String[] args){
-        File file = new File("/Users/Dr.Wen/Desktop/第4章\\ 桌面弹球.pdf");
-        Collector c = new Collector(file);
-        c.reName(file);
+        File file = new File("/Users/Dr.Wen/Desktop/班级工作");
+        Collector c = new Collector();
+        File[] files = c.getFiles(file);
+        for (File i:files){
+            System.out.println(i);
+        }
     }
 }
