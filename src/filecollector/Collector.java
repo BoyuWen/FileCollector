@@ -11,24 +11,11 @@ import java.util.regex.*;
  * 方法3：移动file到指定文件夹路径
  */
 public class Collector {
+    File[] result = new File[500]; //指定路径中所有文件列表
+    private int i = 0; //文件数组下标
+
     //1、得到指定文件路径下的所有文件列表
     public File[] getFiles(File file){
-        int foot = 0;
-        File[] result = new File[100]; //指定路径中所有文件列表
-//        if (file.exists()){
-//            File[] files = file.listFiles();
-//            if (files != null){
-//                for (int i=0;i<files.length;i++) {
-//                    if (files[i].isDirectory()){
-//                        getFiles(files[i]);
-//                    }else {
-//                        result[foot++] = files[i];
-//                    }
-//                }
-//            }
-//        }else{
-//            System.out.println("系统中不存在此文件！");
-//        }
         if (file.exists()){
             if (file.isDirectory()){
                 File[] files = file.listFiles();
@@ -38,9 +25,10 @@ public class Collector {
                     }
                 }
             }else {
-                result[foot] = file;
-                foot++;
-                //System.out.println(result[foot-1]);
+                result[i] = file;
+                i++;
+                //System.out.print(result[i-1]+"    ");
+                //System.out.println(i);
             }
         }else {
             System.out.println("系统中不存在此文件！");
