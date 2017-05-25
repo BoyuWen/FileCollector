@@ -1,27 +1,20 @@
 package filecollector;
 
-import java.io.File;
+import java.io.*;
 import java.util.regex.*;
 
 /**
- * Created by Dr.Wen on 2017/5/25.
+ * Created by Dr.Wen on 2017/4/13.
  *
  * 方法1、得到指定文件路径下的所有文件列表
  * 方法2：修改file文件名
  * 方法3：移动file到指定文件夹路径
  */
 public class Collector {
-    //private File file;   //指定文件路径
-
-
-//    public Collector (File file){
-//        //this.file = file;
-//    }
     //1、得到指定文件路径下的所有文件列表
     public File[] getFiles(File file){
         int foot = 0;
         File[] result = new File[100]; //指定路径中所有文件列表
-
 //        if (file.exists()){
 //            File[] files = file.listFiles();
 //            if (files != null){
@@ -36,7 +29,6 @@ public class Collector {
 //        }else{
 //            System.out.println("系统中不存在此文件！");
 //        }
-
         if (file.exists()){
             if (file.isDirectory()){
                 File[] files = file.listFiles();
@@ -46,28 +38,30 @@ public class Collector {
                     }
                 }
             }else {
-                result[foot++] = file;
-                System.out.println(result[foot-1]);
+                result[foot] = file;
+                foot++;
+                //System.out.println(result[foot-1]);
             }
         }else {
             System.out.println("系统中不存在此文件！");
         }
         return result;
     }
-    //2、修改file文件名并移动到指定目录
-    public void reName(File file){
-        String oldName = file.toString();
 
-        //获取学号
+    //2、返回新生成的文件名
+    public void reName(File file,String str){ //要检查的文件、要移动的路径根目录
+        boolean bool1,bool2=false,bool3=false,bool4;
+        String oldName = file.toString();
+        ////获取学号
         Pattern pat1 = Pattern.compile("^.*(2014011615|20150152[0-5][0-9])[^/]*$");
         Matcher mat1 = pat1.matcher(oldName);
 
         String number = null; //学号
-        if (mat1.matches()){
+        if (bool1 = mat1.matches()){
             number = mat1.group(1);
-            System.out.println(number);
+            //System.out.println(number);
         }
-        //获取姓名
+        ////获取姓名
         Pattern pat2 = Pattern.compile("^.*([\\u4e00-\\u9fa5]{3})[^/]*$");
         Pattern pat3 = Pattern.compile("^.*([\\u4e00-\\u9fa5]{2})[^/]*$");
         Matcher mat2 = pat2.matcher(oldName);
@@ -76,15 +70,42 @@ public class Collector {
         String name = null; //姓名
         if (mat2.matches()){
             name = mat2.group(1);
-        }else {
-            mat3.matches();
+            bool2 = true;
+        }else if(bool3 = mat3.matches()){
             name = mat3.group(1);
         }
-        //System.out.println(Name);
-        String newName = number + name;
+        //System.out.println(name);
+        ////获取后缀
+        Pattern pat4 = Pattern.compile("^.*\\.([^/]*)$");
+        Matcher mat4 = pat4.matcher(oldName);
 
+        String suffix = null;
+        if (bool4 = mat4.matches()){
+            suffix = mat4.group(1);
+            //System.out.println(suffix);
+        }
+        //System.out.println(file.renameTo(new File(str+"/"+number+" "+name+"."+suffix)));
+        if (bool1 && (bool2 || bool3) &&bool4){
+            String newName = (str+"/"+number+" "+name+"."+suffix);
+            copyFile(file,newName);
+        }
     }
-    //3、移动file到指定文件夹路径
-   // public void
 
+    //////复制文件方法
+    public void copyFile(File oldFile,String newFile){
+        try{
+            if (oldFile.exists()){
+                InputStream input = new FileInputStream(oldFile);
+                OutputStream output = new FileOutputStream(newFile);
+                int data;
+                while((data = input.read()) != -1){
+                    output.write(data);
+                }
+                input.close();
+                output.close();
+            }
+        }catch (IOException e){
+            System.out.println("复制文件错误！");
+        }
+    }
 }
