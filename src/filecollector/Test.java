@@ -21,9 +21,6 @@ public class Test {
         String str = "/Users/Dr.Wen/Desktop/123";
         Collector c = new Collector();
         File[] files = c.getFiles(file);
-//        for (int i=0;i<files.length;i++){
-//            System.out.println(files[i]);
-//        }
         for (File sub:files){
             if (sub == null) break;
             c.reName(sub,str);

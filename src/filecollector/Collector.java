@@ -25,10 +25,7 @@ public class Collector {
                     }
                 }
             }else {
-                result[i] = file;
-                i++;
-                //System.out.print(result[i-1]+"    ");
-                //System.out.println(i);
+                result[i++] = file;
             }
         }else {
             System.out.println("系统中不存在此文件！");
@@ -47,7 +44,6 @@ public class Collector {
         String number = null; //学号
         if (bool1 = mat1.matches()){
             number = mat1.group(1);
-            //System.out.println(number);
         }
         ////获取姓名
         Pattern pat2 = Pattern.compile("^.*([\\u4e00-\\u9fa5]{3})[^/]*$");
@@ -62,7 +58,6 @@ public class Collector {
         }else if(bool3 = mat3.matches()){
             name = mat3.group(1);
         }
-        //System.out.println(name);
         ////获取后缀
         Pattern pat4 = Pattern.compile("^.*\\.([^/]*)$");
         Matcher mat4 = pat4.matcher(oldName);
@@ -70,12 +65,11 @@ public class Collector {
         String suffix = null;
         if (bool4 = mat4.matches()){
             suffix = mat4.group(1);
-            //System.out.println(suffix);
         }
-        //System.out.println(file.renameTo(new File(str+"/"+number+" "+name+"."+suffix)));
         if (bool1 && (bool2 || bool3) &&bool4){
             String newName = (str+"/"+number+" "+name+"."+suffix);
             copyFile(file,newName);
+            file.delete();
         }
     }
 
