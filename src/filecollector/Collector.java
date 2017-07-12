@@ -14,8 +14,17 @@ public class Collector {
     File[] result = new File[500]; //指定路径中所有文件列表
     private int i = 0; //文件数组下标
 
+    public Collector(){
+        File file = new File("/Users/Dr.Wen/Downloads");
+        String str = "/Users/Dr.Wen/Desktop/15级2班操作系统模拟实验";
+        File[] files = getFiles(file);
+        for (File sub:files){
+            if (sub == null) break;
+            reName(sub,str);
+        }
+    }
     //1、得到指定文件路径下的所有文件列表
-    public File[] getFiles(File file){
+    private File[] getFiles(File file){
         if (file.exists()){
             if (file.isDirectory()){
                 File[] files = file.listFiles();
@@ -32,9 +41,8 @@ public class Collector {
         }
         return result;
     }
-
     //2、返回新生成的文件名
-    public void reName(File file,String str){ //要检查的文件、要移动的路径根目录
+    private void reName(File file,String str){ //要检查的文件、要移动的路径根目录
         boolean bool1,bool2=false,bool3=false,bool4;
         String oldName = file.toString();
         ////获取学号
@@ -69,12 +77,11 @@ public class Collector {
         if (bool1 && (bool2 || bool3) &&bool4){
             String newName = (str+"/"+number+" "+name+"."+suffix);
             copyFile(file,newName);
-            file.delete();
+            //file.delete();
         }
     }
-
     //////复制文件方法
-    public void copyFile(File oldFile,String newFile){
+    private void copyFile(File oldFile,String newFile){
         try{
             if (oldFile.exists()){
                 InputStream input = new FileInputStream(oldFile);

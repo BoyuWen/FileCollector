@@ -13,17 +13,10 @@ import java.io.File;
  *
  * 待改进模块：
  * 1、获取File列表用List实现
- *
+ * 2、可以复制多种类型的文件
  */
 public class Test {
     public static void main(String[] args){
-        File file = new File("/Users/Dr.Wen/Downloads");
-        String str = "/Users/Dr.Wen/Desktop/123";
-        Collector c = new Collector();
-        File[] files = c.getFiles(file);
-        for (File sub:files){
-            if (sub == null) break;
-            c.reName(sub,str);
-        }
+        new Collector();
     }
 }
