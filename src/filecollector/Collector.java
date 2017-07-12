@@ -57,7 +57,6 @@ public class Collector {
         Pattern pat3 = Pattern.compile("^.*([\\u4e00-\\u9fa5]{2})[^/]*$");
         Matcher mat2 = pat2.matcher(oldName);
         Matcher mat3 = pat3.matcher(oldName);
-
         String name = null; //姓名
         if (mat2.matches()){
             name = mat2.group(1);
