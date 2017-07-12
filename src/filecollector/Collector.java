@@ -48,7 +48,6 @@ public class Collector {
         ////获取学号
         Pattern pat1 = Pattern.compile("^.*(2014011615|20150152[0-5][0-9])[^/]*$");
         Matcher mat1 = pat1.matcher(oldName);
-
         String number = null; //学号
         if (bool1 = mat1.matches()){
             number = mat1.group(1);
